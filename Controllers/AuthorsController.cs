@@ -3,15 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Fisher.Bookstore.Controllers
 {
+    [Route("Authors")]
     public class AuthorsController : Controller
     {
+        [Route("")]
+        [Route("Index")]
         public IActionResult Index()
         {
-            return Content("This is the Index");
+            return View();
         }
+        [Route("Featured")]
         public IActionResult Featured()
         {
-            return Content("These are the featured authors");
+            return View();
         }
     }
 }
