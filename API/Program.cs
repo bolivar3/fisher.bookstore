@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace fisher.bookstore.api
+namespace Fisher.Bookstore.Api
 {
     public class Program
     {

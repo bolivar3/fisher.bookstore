@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Fisher.Bookstore.Models;
-using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Fisher.Bookstore.Api.Controllers
 {
@@ -43,11 +43,24 @@ namespace Fisher.Bookstore.Api.Controllers
             this.db.SaveChanges();
         }
 
-            [HttpGet]
-            public IActionResult Get()
-            {
-                return Ok(db.Books);
-            }
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(db.Books);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetBook(int id)
+        {
+            var book = db.Books.FirstOrDefault(b => b.Id == id);
+
+            if (book == null)
+          {
+            return NotFound();
+          }
+
+          return Ok(book);
+        }
         }
 
     }
