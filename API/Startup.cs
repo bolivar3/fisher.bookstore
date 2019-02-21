@@ -13,7 +13,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Fisher.Bookstore.Models;
 
-namespace fisher.bookstore.Api
+namespace Fisher.Bookstore.Api
 {
     public class Startup
     {
