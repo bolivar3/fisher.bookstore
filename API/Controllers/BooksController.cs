@@ -11,7 +11,7 @@ namespace Fisher.Bookstore.Api.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly BookstoreController BookstoreContext db;
+        private readonly BookstoreContext db;
 
         public BooksController(BookstoreContext db)
         {
@@ -41,6 +41,7 @@ namespace Fisher.Bookstore.Api.Controllers
                 });
             }
             this.db.SaveChanges();
+        }
 
             [HttpGet]
             public IActionResult Get()
@@ -50,4 +51,3 @@ namespace Fisher.Bookstore.Api.Controllers
         }
 
     }
-}
