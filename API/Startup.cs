@@ -29,21 +29,37 @@ namespace Fisher.Bookstore.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BookstoreContext>(options => options.UseNpgsql(Configuration.GetConnectionString("BookstoreContext")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<BookstoreContext>().AddDefaultTokenProviders();
+
+            services.AddAuthentication(option => 
+            {
+                option.DefaultAuthenticationScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            })
+             .AddJwtBearer(jwtOptions => 
+             {
+                 jwtOptions.TokenValidationParameters = new TokeValidationParameters()
+                 {
+                     ValidateActor = true,
+                     ValidateAudience = true,
+                     ValidateLifetime = true,
+                     ValidIssuer = Configuration["JWTConfiguration:Issuer"],
+                     ValidAudience = Configuration["JWTConfiguration:Audience"],
+                     IssuerSigningKey = new
+                SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWTConfiguration.Key"])
+                )
+                 };
+             });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseMvc();
